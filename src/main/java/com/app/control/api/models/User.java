@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 @Table(name = "users")
 public class User {
 
@@ -27,8 +29,8 @@ public class User {
 	private String email;
 	@Column(nullable = false)
 	private String password;
-	@Column(columnDefinition = "default 1")
-	private Integer limit;
+	@Column(columnDefinition = "int(2) default 1")
+	private Integer limited;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Disseminator> disseminators;
