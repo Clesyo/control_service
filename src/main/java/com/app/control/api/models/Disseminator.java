@@ -13,10 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 @Table(name = "disseminators")
 public class Disseminator {
 
@@ -27,6 +29,8 @@ public class Disseminator {
 	private String token;
 	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
+	private String email;
 	private String telephone;
 	@Column(nullable = false)
 	private String cellphone;

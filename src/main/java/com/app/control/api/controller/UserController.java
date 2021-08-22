@@ -21,7 +21,6 @@ import com.app.control.api.models.User;
 import com.app.control.api.models.dto.UserDTO;
 import com.app.control.api.services.UserService;
 
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
