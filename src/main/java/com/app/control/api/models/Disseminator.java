@@ -54,5 +54,5 @@ public class Disseminator {
 	private User user;
 	
 	@OneToMany(mappedBy = "disseminator")
-	private List<Service> services;
+	private List<Services> services;
 }
