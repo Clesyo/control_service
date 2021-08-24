@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(path = "/servicos", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/servico", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class ServiceController {
 

@@ -14,13 +14,17 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Builder
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
 	@Id
@@ -38,8 +42,7 @@ public class User {
 	@NotEmpty(message = "Campo Senha deve ser preenchido.")
 	@ApiModelProperty("Senha do usuário")
 	private String password;
-	@Column(columnDefinition = "int(2) default 1")
-	@NotNull(message = "O campo Limite deve ser informado.")
+	@Column(nullable = false, columnDefinition = "int(2) default 1")
 	@ApiModelProperty("Limite de divulgador por usuário")
 	private Integer limited;
 	

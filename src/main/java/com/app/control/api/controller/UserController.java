@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+	private final PasswordEncoder encoder;
 
 	@GetMapping
 	@ApiOperation("Busca todos os usuários")
@@ -40,21 +42,25 @@ public class UserController {
 		return userService.findAll();
 	}
 
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	@ApiOperation("Busca um usuário pelo seu código ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Usuário encontrado"),
 			@ApiResponse(code = 404, message = "Usuário não encontrado") })
-	public UserDTO findById(Long id) {
+	public UserDTO findById(@PathVariable Long id) {
 		return UserDTO.convertToDto(userService.findById(id));
 	}
 
-	@GetMapping("/email")
-	@ApiOperation("Busca um usuário pelo seu email")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Usuário encontrado"),
-			@ApiResponse(code = 404, message = "Usuário não encontrado") })
-	public UserDTO findByEmail(String email) {
-		return UserDTO.convertToDto(userService.findByEmail(email));
-	}
+	/*
+	 * @GetMapping("/email")
+	 * 
+	 * @ApiOperation("Busca um usuário pelo seu email")
+	 * 
+	 * @ApiResponses({ @ApiResponse(code = 200, message = "Usuário encontrado"),
+	 * 
+	 * @ApiResponse(code = 404, message = "Usuário não encontrado") }) public
+	 * UserDTO findByEmail(@PathVariable String email) { return
+	 * UserDTO.convertToDto(userService.findByEmail(email)); }
+	 */
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -62,6 +68,8 @@ public class UserController {
 	@ApiResponses({ @ApiResponse(code = 201, message = "Usuário salvo com sucesso"),
 			@ApiResponse(code = 400, message = "Erro de validação") })
 	public UserDTO create(@RequestBody @Valid User usuario) {
+		String passwordEncrypto = encoder.encode(usuario.getPassword());
+		usuario.setPassword(passwordEncrypto);
 		return UserDTO.convertToDto(userService.create(usuario));
 	}
 
