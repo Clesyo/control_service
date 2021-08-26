@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.app.control.api.configuration.security.auth.ApiUserDetailService;
+import com.app.control.api.configuration.security.auth.jwt.JwtService;
+import com.app.control.api.exception.PasswordInvalidException;
 import com.app.control.api.models.User;
+import com.app.control.api.models.dto.CredentailDTO;
+import com.app.control.api.models.dto.TokenDTO;
 import com.app.control.api.models.dto.UserDTO;
 import com.app.control.api.services.UserService;
 
@@ -35,6 +42,8 @@ public class UserController {
 
 	private final UserService userService;
 	private final PasswordEncoder encoder;
+	private final ApiUserDetailService userDetailService;
+	private final JwtService jwtService;
 
 	@GetMapping
 	@ApiOperation("Busca todos os usuários")
@@ -90,5 +99,17 @@ public class UserController {
 			@ApiResponse(code = 404, message = "Usuário não encontrado") })
 	public void delete(@PathVariable @PathParam("ID do usuário") Long id) {
 		userService.delete(id);
+	}
+
+	@PostMapping("/auth")
+	public TokenDTO authentication(@RequestBody CredentailDTO credential) {
+		try {
+			User user = User.builder().email(credential.getLogin()).password(credential.getPassword()).build();
+			userDetailService.authentication(user);
+			String token = jwtService.generateToken(user);
+			return new TokenDTO(user.getEmail(), token);
+		} catch (UsernameNotFoundException | PasswordInvalidException e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+		}
 	}
 }
