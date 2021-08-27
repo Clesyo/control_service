@@ -21,6 +21,14 @@ public class DisseminatorService {
 		return repository.findAll();
 	}
 	
+	public List<Disseminator> findByUserId(Long id){
+		return repository.findByUserId(id);
+	}
+	
+	public List<Disseminator> findByName(String name){
+		return repository.findByNameLike(name);
+	}
+	
 	public Disseminator findById(Long id) {
 		return findOrFail(id);
 	}

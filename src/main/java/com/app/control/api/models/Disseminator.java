@@ -13,14 +13,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "disseminators")
 public class Disseminator {
 
@@ -51,7 +56,7 @@ public class Disseminator {
 	@NotEmpty(message = "Campo Endereço deve ser preenchido.")
 	private String adress;
 	@Column(nullable = false)
-	@NotEmpty(message = "Campo Número deve ser preenchido.")
+	@NotNull(message = "Campo Número deve ser preenchido.")
 	private Integer numberHouse;
 	private String complement;
 	@Column(nullable = false)
