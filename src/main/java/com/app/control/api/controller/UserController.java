@@ -82,7 +82,7 @@ public class UserController {
 		return UserDTO.convertToDto(userService.create(usuario));
 	}
 
-	@PutMapping("/id")
+	@PutMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@ApiOperation("Altera um usuário")
 	@ApiResponses({ @ApiResponse(code = 204, message = "Usuário alterado com sucesso"),
@@ -92,9 +92,9 @@ public class UserController {
 		return UserDTO.convertToDto(userService.edit(id, usuario));
 	}
 
-	@DeleteMapping("/id")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	@ApiOperation("Altera um usuário")
+	@ApiOperation("Deleta um usuário")
 	@ApiResponses({ @ApiResponse(code = 204, message = "Usuário deletado com sucesso"),
 			@ApiResponse(code = 404, message = "Usuário não encontrado") })
 	public void delete(@PathVariable @PathParam("ID do usuário") Long id) {

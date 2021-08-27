@@ -1,6 +1,7 @@
 package com.app.control.api.configuration.documentation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -28,8 +29,8 @@ public class SwaggerConfig {
 		// TODO Auto-generated method stub
 		return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false).select()
 				.apis(RequestHandlerSelectors.basePackage("com.app.control.api.controller")).paths(PathSelectors.any())
-				.build().apiInfo(apiInfo());
-		// .securityContexts(Arrays.asList(securityContext())).securitySchemes(Arrays.asList(apiKey()));
+				.build().apiInfo(apiInfo())
+		.securityContexts(Arrays.asList(securityContext())).securitySchemes(Arrays.asList(apiKey()));
 	}
 
 	private ApiInfo apiInfo() {

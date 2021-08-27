@@ -46,7 +46,7 @@ public class DisseminatorController {
 		}).collect(Collectors.toList());
 	}
 
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	@ApiOperation("Busca um divulgador pelo seu código ID")
 	@ApiResponses({ @ApiResponse(code = 201, message = "Divulgador encontrado com sucesso."),
 			@ApiResponse(code = 404, message = "Divulgador não encotrado") })
@@ -69,7 +69,7 @@ public class DisseminatorController {
 		return DisseminatorDTO.convertToDto(service.create(disseminator));
 	}
 
-	@PutMapping("/id")
+	@PutMapping("/{id}")
 	@ApiOperation("Altere um divulgador")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@ApiResponses({ @ApiResponse(code = 204, message = "Divulgador salvo com sucesso"),
@@ -85,7 +85,7 @@ public class DisseminatorController {
 		return DisseminatorDTO.convertToDto(service.edit(id, disseminator));
 	}
 
-	@DeleteMapping("/id")
+	@DeleteMapping("/{id}")
 	@ApiOperation("Deleta um divulgador")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@ApiResponses({ @ApiResponse(code = 204, message = "Divulgador deletado com sucesso"),

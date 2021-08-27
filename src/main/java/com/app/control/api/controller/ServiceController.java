@@ -45,7 +45,7 @@ public class ServiceController {
 		}).collect(Collectors.toList());
 	}
 
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	@ApiOperation("Busca um serviço pelo seu codigo ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Serviço encontrado com sucesso"),
 			@ApiResponse(code = 404, message = "Serviços não encontrado") })
@@ -65,7 +65,7 @@ public class ServiceController {
 		return ServiceDTO.convertToDto(service.create(services));
 	}
 
-	@PutMapping("/id")
+	@PutMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@ApiOperation("Altera um serviço")
 	@ApiResponses({ @ApiResponse(code = 204, message = "Serviço alterado com sucesso"),
@@ -78,7 +78,7 @@ public class ServiceController {
 		return ServiceDTO.convertToDto(service.edit(id, services));
 	}
 
-	@DeleteMapping("/id")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@ApiOperation("Deleta um serviço")
 	@ApiResponses({ @ApiResponse(code = 204, message = "Serviço deletado com sucesso"),
